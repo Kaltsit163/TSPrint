@@ -1,0 +1,71 @@
+@function fix($px, $base-font-size: 1000px) {
+  @if (unitless($px)) {
+    @warn "Assuming #{$px} to be in pixels, attempting to convert it into pixels for you";
+    @return fix($px + 0px); // That may fail.
+  } @else if (unit($px) == em) {
+    @return $px;
+  }
+  @return ($px / $base-font-size) * 1em;
+}
+
+$scale: 2.5;
+
+._scale{
+  transform: scale(  1/$scale );
+  transform-origin: 0 0;
+}
+
+.icon-warning{
+  position: absolute;
+  width: percentage(42/447);
+  padding-top: percentage(42/447);
+  right: percentage(10/447);
+  top: percentage(10/447);
+  background-image: url('//inimg02.jiuyan.info/in/2017/06/14/01DA701F-EFAA-7AF5-415E-73653D85FD5D.png');
+  background-position: 0 0;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+.change-tip{
+  pointer-events: none;
+  z-index: 1;
+  position: absolute;
+  background-image: url('//inimg07.jiuyan.info/in/2017/06/15/A666A7F9-DDB0-C2DE-8D70-14C7BC088C12.png');
+  background-position: 0 center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  width: 2em;
+  height: 0.4em;
+  left: 0.1em;
+  bottom: 0.05em;
+}
+
+@-webkit-keyframes flashAnimation
+{
+    0%,30%,60%,100% { border-color: rgba(67,221,245,0); }
+    15%,45%,75% { border-color: rgba(67,221,245,1); }
+}
+@keyframes flashAnimation
+{
+    0%,30%,60%,100% { border-color: rgba(67,221,245,0); }
+    15%,45%,75% { border-color: rgba(67,221,245,1); }
+}
+
+.flash{
+  &:before{
+    content:'';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border: 3px dashed rgba(67,221,245,0); /*no*/
+    -webkit-animation: flashAnimation 3s linear;
+    animation: flashAnimation 3s linear;
+    pointer-events: none;
+  };
+}
+.no-value{
+  color: #aaa !important;
+}

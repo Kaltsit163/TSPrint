@@ -1,0 +1,47 @@
+/* 定义布局为盒模型 */
+@mixin flex-warrper { 
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+}
+
+/* 子元素占据剩余的空间 */
+@mixin flex-item($count: 1) {
+	-webkit-box-flex: $count;
+    -webkit-flex: $count;
+    -ms-flex: $count;
+    flex: $count;
+}
+
+/* 盒模型垂直布局*/
+@mixin flex-v {
+    -webkit-box-orient: vertical;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+/* 子元素垂直居中*/
+@mixin flex-align-center {
+    -webkit-box-align: center;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+}
+
+/*子元素水平居中*/
+@mixin flex-pack-center {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+/*子元素两端对齐*/
+@mixin flex-pack-justify {
+    -webkit-box-pack: justify;
+    -webkit-justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}

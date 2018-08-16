@@ -1,0 +1,15 @@
+@mixin onepixelBorder($borderWidth: 1px, $color: #E0E0E0){
+	content: "";
+    pointer-events: none;
+    box-sizing: border-box;
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    left: 0;
+    top: 0;
+    border: $borderWidth solid $color;/*no*/
+    -webkit-transform: scale(0.5);
+    -webkit-transform-origin: 0 0;
+    transform: scale(0.5);
+    transform-origin: 0 0;
+}

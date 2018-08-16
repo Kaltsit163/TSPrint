@@ -1,0 +1,9 @@
+@import './mixin/_flex';
+@import './mixin/_border';
+
+@mixin clearDefaultStyle {
+  -webkit-tap-highlight-color: rgba(0,0,0,0);
+  -webkit-appearance: none;
+  border: none;
+}
+

@@ -1,29 +1,56 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
     <router-view/>
+    <!-- 底部 -->
+    <Footer :modules="footerConf.modules"
+            :showCartDot="footerConf.activeDot"
+            :activeModuleId="footerConf.activeModuleId"></Footer>
   </div>
 </template>
-
-<style lang="scss">
-#app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+import Footer from '@/components/Footer.vue' // @ is an alias to /src
+import Request from 'axios'
+export default {
+  name: 'Print',
+  components: {
+    Footer
+  },
+  data () {
+    return {
+      footerConf: {
+        modules: [],
+        activeDot: false,
+        activeModuleId: 'home'
+      }
     }
+  },
+  methods: {
+    getShopCartState () {
+      Request.get('/cart/has/products', {}).then(response => {
+        let res = response.data
+        if (res.succ) {
+          this.footerConf.activeDot = res.data.hasValidProducts
+        }
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    getFooterConfig () {
+      Request.get('/home/resources', {}).then(response => {
+        let res = response.data
+        if (res.succ) {
+          this.footerConf.modules = res.data.tabs
+        }
+      }).catch(error => {
+        console.log(error)
+      })
+    }
+  },
+  computed: {
+  },
+  mounted () {
+    this.$toasted.show('hello billo')
   }
 }
-</style>
+</script>
+<style lang="scss"></style>
