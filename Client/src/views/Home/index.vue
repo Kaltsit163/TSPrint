@@ -1,6 +1,6 @@
 <template>
   <section>
-    <div class="nav fake" v-show="showFakeToolBar" v-if="collections.length" id="jsTopNav" v-bind:style="{width: Wid + 'px'}">
+    <div class="nav fake" v-show="showFakeToolBar" v-if="collections.length" id="jsTopNav" v-bind:style="{width: Wid + "px"}">
         <ul>
           <li class="nav-item js-top-nav-item" 
           v-for="(item, index) in collections" 
@@ -77,25 +77,25 @@
   </section>
 </template>
 <script>
-import IconArea from './Com/IconArea'
-import Recommend from './Com/Recommend'
-import Products from './Com/Products'
-import Footer from '@/components/Footer'
-import Guest from './Com/Guest'
-import Banner from './Com/Banner'
-import Request from 'axios'
-import BackTop from './Com/BackTop'
-import $ from 'jquery'
-import { mapState } from 'vuex'
+import IconArea from "./Com/IconArea"
+import Recommend from "./Com/Recommend"
+import Products from "./Com/Products"
+import Footer from "@/components/Footer"
+import Guest from "./Com/Guest"
+import Banner from "./Com/Banner"
+import Request from "axios"
+import BackTop from "./Com/BackTop"
+import $ from "jquery"
+import { mapState } from "vuex"
 
 /* global IScroll:true */
 
 const API = {
-  getResource: '/home/resources',
-  getShelvesCollection: '/home/shelves/collections',
-  getMarquee: '/marquee/homepage',
-  getCouponData: '/activity/coupon/receive',
-  getShelves: '/home/shelves'
+  getResource: "/home/resources",
+  getShelvesCollection: "/home/shelves/collections",
+  getMarquee: "/marquee/homepage",
+  getCouponData: "/activity/coupon/receive",
+  getShelves: "/home/shelves"
 }
 
 let cidMaps = []
@@ -104,7 +104,7 @@ let ThresholdForBar = 0
 const clientH = document.documentElement.clientHeight
 
 export default {
-  name: 'newHomepage',
+  name: "newHomepage",
   data () {
     return {
       scrollT: null,
@@ -114,15 +114,15 @@ export default {
       barPositionY: 1000000,
       Wid: document.documentElement.clientWidth,
       marquee: {
-        speed: 'simple',
+        speed: "simple",
         num: 3,
         show: false,
         delay: 3,
-        content: '',
+        content: "",
         isFixed: false,
-        bgColor: '#F6F6F6',
-        fontColor: '#B0B0B0',
-        iconColor: '#FF5E51'
+        bgColor: "#F6F6F6",
+        fontColor: "#B0B0B0",
+        iconColor: "#FF5E51"
       },
       coupon: {
         show: false,
@@ -135,7 +135,7 @@ export default {
       },
       footerConf: {
         modules: [],
-        activeModuleId: 'home'
+        activeModuleId: "home"
       },
       couponLogin: true,
       banners: [],
@@ -146,7 +146,7 @@ export default {
       collectionSeq: 0,
       showGoTop: false,
       isGuest: false,
-      guestId: ''
+      guestId: ""
     }
   },
   created () {
@@ -188,7 +188,7 @@ export default {
           me.showGoTop = false
         }
       }
-      window.addEventListener('scroll', function(e) {
+      window.addEventListener("scroll", function(e) {
         lastKnownScrollPosition = window.scrollY
         if (!ticking) {
           window.requestAnimationFrame(function() {
@@ -200,10 +200,10 @@ export default {
       })
     },
     initCompute () {
-      let jsProduct = $('#jsProducts')
+      let jsProduct = $("#jsProducts")
       if (jsProduct) {
         let computH
-        computH = Math.abs($('#jsProducts').offset().top - window.scrollY)
+        computH = Math.abs($("#jsProducts").offset().top - window.scrollY)
         if (!isNaN(computH) && computH >= 0) {
           this.barPositionY = computH
         }
@@ -211,11 +211,11 @@ export default {
     },
     getCouponData () {
       let tplObj = {
-        page: 'homepage',
+        page: "homepage",
         t: new Date().getTime()
       }
-      if (typeof Util.getQueryString('_psource') === 'string') {
-        tplObj['source'] = Util.getQueryString('_psource')
+      if (typeof Util.getQueryString("_psource") === "string") {
+        tplObj["source"] = Util.getQueryString("_psource")
       }
       Request.get(API.getCouponData, {
         params: tplObj
@@ -226,12 +226,12 @@ export default {
             this.couponLogin = res.isLogin
             this.coupon.show = true
             this.coupon.data = res.data
-          } else if (res.code === '412') {
+          } else if (res.code === "412") {
             this.$toast(res.msg)
           }
         })
         .catch(error => {
-          this.$toast('网络错误')
+          this.$toast("网络错误")
           console.log(error)
         })
     },
@@ -248,10 +248,10 @@ export default {
       if (tplBtn && tplBtn.action) {
         this.$nextTick(() => {
           switch (tplBtn.action) {
-            case 'redirect':
+            case "redirect":
               location.href = tplBtn.link
               break
-            case 'close':
+            case "close":
               this.coupon.show = false
               break
             default:
@@ -274,7 +274,7 @@ export default {
           }
         })
         .catch(error => {
-          this.$toast('网络错误')
+          this.$toast("网络错误")
           console.log(error)
         })
     },
@@ -298,7 +298,7 @@ export default {
             this.recommends = res.data.recommends
             this.footerConf.modules = res.data.tabs
             this.isGuest = res.isGuest
-            this.guestId = res.data.guestId + ''
+            this.guestId = res.data.guestId + ""
             this.$nextTick(() => {
               this.initCompute()
             })
@@ -313,7 +313,7 @@ export default {
           }
         })
         .catch(error => {
-          this.$toast('网络错误')
+          this.$toast("网络错误")
           console.log(error)
         })
     },
@@ -324,13 +324,13 @@ export default {
           if (res.succ) {
             this.collections = res.data.items
             res.data.items.forEach(item => {
-              cidMaps.push('[data-cid=' + item.id + ']')
+              cidMaps.push("[data-cid=" + item.id + "]")
             })
             this.getShelves()
             this.$nextTick(() => {
-              ThresholdForBar = $('.js-nav').height()
+              ThresholdForBar = $(".js-nav").height()
               if (!this.scrollNav && this.collections.length) {
-                this.scrollNav = new IScroll('#jsNav', {
+                this.scrollNav = new IScroll("#jsNav", {
                   probeType: 1,
                   mouseWheel: true,
                   disablePointer: true,
@@ -345,7 +345,7 @@ export default {
                   vScroll: false,
                   momentum: false
                 })
-                this.scrollTopNav = new IScroll('#jsTopNav', {
+                this.scrollTopNav = new IScroll("#jsTopNav", {
                   probeType: 1,
                   mouseWheel: true,
                   disablePointer: true,
@@ -369,7 +369,7 @@ export default {
           }
         })
         .catch(error => {
-          this.$toast('网络错误')
+          this.$toast("网络错误")
           console.log(error)
         })
     },
@@ -388,7 +388,7 @@ export default {
           }
         })
         .catch(error => {
-          this.$toast('网络错误')
+          this.$toast("网络错误")
           console.log(error)
         })
     },
@@ -432,8 +432,8 @@ export default {
       if (!isNaN(_comput)) {
         window.scrollTo(0, Math.abs(_comput), 200)
       }
-      Tracker.add('newH*tabs*click_' + this.collections[index].id)
-      $('#wrapper').trigger('scroll')
+      Tracker.add("newH*tabs*click_" + this.collections[index].id)
+      $("#wrapper").trigger("scroll")
       setTimeout(() => {
         this.collectionSeq = parseInt(index, 10)
       }, 200)
@@ -471,14 +471,14 @@ export default {
         this.$nextTick(() => {
           setTimeout(() => {
             this.scrollNav.scrollToElement(
-              document.querySelectorAll('.js-nav-item')[newV]
+              document.querySelectorAll(".js-nav-item")[newV]
             )
           }, 100)
         })
       }
       if (this.scrollTopNav) {
         this.scrollTopNav.scrollToElement(
-          document.querySelectorAll('.js-top-nav-item')[newV],
+          document.querySelectorAll(".js-top-nav-item")[newV],
           100
         )
       }
@@ -497,7 +497,7 @@ export default {
 }
 </script>
 <style lang="scss">
-@import './src/scss/mixin.scss';
+@import "./src/scss/mixin.scss";
 
 body {
   -webkit-touch-callout: none;
@@ -575,7 +575,7 @@ body {
     position: relative;
     div:after {
       position: absolute;
-      content: '';
+      content: "";
       width: 100%;
       height: 6px;
       border-radius: 1000px;
